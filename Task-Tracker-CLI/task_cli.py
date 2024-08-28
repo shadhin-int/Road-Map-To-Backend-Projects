@@ -61,7 +61,13 @@ def update_task(id, description):
             print(f'Task {id} updated successfully')
             return
     print(f'Task with ID {id} not found')
-            
+
+
+def delete_task(id):
+    tasks = load_tasks()
+    tasks = [task for task in tasks if task['id'] != id]
+    save_tasks(tasks)
+    print(f'Task {id} deleted successfully')
 
 
 def main():
@@ -83,6 +89,11 @@ def main():
     parser_update.add_argument('description', type=str, help='New task description')
 
 
+    # Delete Task
+    parser_delete = subparsers.add_parser('delete', help='Delete Task')
+    parser_delete.add_argument('id', type=int, help='Task Id')
+
+
     args = parser.parse_args()
 
     if args.command == 'add':
@@ -91,6 +102,8 @@ def main():
         list_tasks(args.filter)
     elif args.command == 'update':
         update_task(args.id, args.description)
+    elif args.command == 'delete':
+        delete_task(args.id)
     
 
 
