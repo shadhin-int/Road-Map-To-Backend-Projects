@@ -50,6 +50,18 @@ def list_tasks(filter_by=None):
     for task in tasks:
         print(f"[{task['id']}] {task['description']} - {task['status']} (Created: {task['created_at']}, Updated: {task['updated_at']})")
 
+def update_task(id, description):
+    tasks = load_tasks()
+
+    for task in tasks:
+        if task['id'] == id:
+            task['description'] = description
+            task['updatedAt'] = get_current_time()
+            save_tasks(tasks)
+            print(f'Task {id} updated successfully')
+            return
+    print(f'Task with ID {id} not found')
+            
 
 
 def main():
@@ -65,12 +77,20 @@ def main():
     parser_list.add_argument('filter', type=str, nargs='?', default=None, choices=['todo', 'in-progress', 'done'], help='Filter tasks by status')
 
 
+    # Update Task
+    parser_update = subparsers.add_parser('update', help='Update Task')
+    parser_update.add_argument('id', type=int, help="Task Id")
+    parser_update.add_argument('description', type=str, help='New task description')
+
+
     args = parser.parse_args()
 
     if args.command == 'add':
         add_task(args.description)
     elif args.command == 'list':
         list_tasks(args.filter)
+    elif args.command == 'update':
+        update_task(args.id, args.description)
     
 
 
