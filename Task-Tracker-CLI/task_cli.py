@@ -41,6 +41,15 @@ def add_task(description):
     print(tasks)
     save_tasks(tasks)
 
+def list_tasks(filter_by=None):
+    tasks = load_tasks()
+    if filter_by:
+        tasks = [task for task in tasks if task['status'] == filter_by]
+    
+    for task in tasks:
+        print(f"[{task['id']}] {task['description']} - {task['status']} (Created: {task['created_at']}, Updated: {task['updated_at']})")
+
+
 
 def main():
     parser = argparse.ArgumentParser(description="Task Tracker CLI")
@@ -50,13 +59,18 @@ def main():
     parser_add = subparsers.add_parser('add', help="Add a new task")
     parser_add.add_argument('description', type=str, help='Task Description')
 
+    # List Tasks
+    parser_list = subparsers.add_parser('list', help='List of Tasks')
+    parser_list.add_argument('filter', type=str, nargs='?', default=None, choices=['todo', 'in-progress', 'done'], help='Filter tasks by status')
+
 
     args = parser.parse_args()
 
     if args.command == 'add':
         add_task(args.description)
+    elif args.command == 'list':
+        list_tasks(args.filter)
     
-
 
 
 if __name__ == '__main__':
