@@ -40,6 +40,7 @@ def add_task(description):
     tasks.append(new_task)
     print(tasks)
     save_tasks(tasks)
+    print(f"New task {task_id} created successfully")
 
 def list_tasks(filter_by=None):
     tasks = load_tasks()
