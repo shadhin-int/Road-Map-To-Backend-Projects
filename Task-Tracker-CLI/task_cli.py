@@ -56,7 +56,7 @@ def update_task(id, description):
     for task in tasks:
         if task['id'] == id:
             task['description'] = description
-            task['updatedAt'] = get_current_time()
+            task['updated_at'] = get_current_time()
             save_tasks(tasks)
             print(f'Task {id} updated successfully')
             return
@@ -68,6 +68,26 @@ def delete_task(id):
     tasks = [task for task in tasks if task['id'] != id]
     save_tasks(tasks)
     print(f'Task {id} deleted successfully')
+
+
+def mark_in_progress(id):
+    tasks = load_tasks()
+
+    for task in tasks:
+        if task['id'] == id:
+            task['status'] = 'in-progress'
+            save_tasks(tasks)
+            print(f"Task with id {id} marked as in progress")
+
+
+def mark_in_done(id):
+    tasks = load_tasks()
+
+    for task in tasks:
+        if task['id'] == id:
+            task['status'] = 'done'
+            save_tasks(tasks)
+            print(f"Task with id {id} marked as done")
 
 
 def main():
@@ -94,6 +114,15 @@ def main():
     parser_delete.add_argument('id', type=int, help='Task Id')
 
 
+    # Mark task as in progress
+    parser_mark_in_progress = subparsers.add_parser('mark-in-progress', help='Mark a task as in-progress')
+    parser_mark_in_progress.add_argument('id', type=int, help='Task ID')
+
+    # Mark task as done
+    parser_mark_done = subparsers.add_parser('mark-in-done', help='Mark a task as done')
+    parser_mark_done.add_argument('id', type=int, help='Task ID')
+
+
     args = parser.parse_args()
 
     if args.command == 'add':
@@ -104,7 +133,12 @@ def main():
         update_task(args.id, args.description)
     elif args.command == 'delete':
         delete_task(args.id)
-    
+    elif args.command == 'mark-in-progress':
+        mark_in_progress(args.id)
+    elif args.command == 'mark-in-done':
+        mark_in_done(args.id)
+    else:
+        parser.print_help()
 
 
 if __name__ == '__main__':
