@@ -16,32 +16,39 @@ The application should run from the command line, accept user actions and inputs
 The list of commands and their usage is given below:
 
 ### Adding a new task
-```
-task-cli add "Buy groceries"
+```bash
+python task-cli add "Buy groceries"
 Output: Task added successfully (ID: 1)
 ```
 
-# Updating and deleting tasks
+### Updating tasks
+```bash
+python task-cli update 1 "Buy groceries and cook dinner"
 ```
-task-cli update 1 "Buy groceries and cook dinner"
+### Deleting a task
+```bash
 task-cli delete 1
 ```
 
-# Marking a task as in progress or done
-```
-task-cli mark-in-progress 1
+### Marking a task as in progress or done
+``` bash
+python task-cli mark-in-progress 1
 task-cli mark-done 1
 ```
 
-# Listing all tasks
-```
-task-cli list
+### Listing all tasks
+``` bash
+python task-cli list
 ```
 
-# Listing tasks by status
+### Listing tasks by status
 
+``` bash
+python task-cli list done
+python task-cli list todo
+python task-cli list in-progress
 ```
-task-cli list done
-task-cli list todo
-task-cli list in-progress
-```
+
+## Project Link
+
+For more details about this project, visit the [Task Tracker Project Roadmap](https://roadmap.sh/projects/task-tracker).
