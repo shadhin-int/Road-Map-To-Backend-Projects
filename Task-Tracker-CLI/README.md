@@ -17,13 +17,13 @@ The list of commands and their usage is given below:
 
 ### Adding a new task
 ```bash
-python task-cli add "Buy groceries"
+python task_cli.py add "Buy groceries"
 Output: Task added successfully (ID: 1)
 ```
 
 ### Updating tasks
 ```bash
-python task-cli update 1 "Buy groceries and cook dinner"
+python task_cli.py update 1 "Buy groceries and cook dinner"
 ```
 ### Deleting a task
 ```bash
@@ -32,21 +32,21 @@ task-cli delete 1
 
 ### Marking a task as in progress or done
 ``` bash
-python task-cli mark-in-progress 1
+python task_cli.py mark-in-progress 1
 task-cli mark-done 1
 ```
 
 ### Listing all tasks
 ``` bash
-python task-cli list
+python task_cli.py list
 ```
 
 ### Listing tasks by status
 
 ``` bash
-python task-cli list done
-python task-cli list todo
-python task-cli list in-progress
+python task_cli.py list done
+python task_cli.py list todo
+python task_cli.py list in-progress
 ```
 
 ## Project Link
