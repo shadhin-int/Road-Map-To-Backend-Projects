@@ -34,6 +34,14 @@ def add_expense(description, amount):
     save_expenses(expenses)
     print(f"Expense added successfully (ID: {expense_id})")
 
+
+def list_expenses():
+    expenses = load_expenses()
+    print("ID  Date       Description  Amount")
+    for expense in expenses:
+        print(f"{expense['id']}   {expense['date']} {expense['description']}        ${expense['amount']:.2f}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Expense Tracker")
     subparsers = parser.add_subparsers(dest='command')
@@ -45,11 +53,16 @@ def main():
     parser_add.add_argument('--amount', type=int, required=True, help='Expense Amount')
 
 
+    # List of Expense
+    parser_list = subparsers.add_parser('list', help='List all expenses')
+
 
     args = parser.parse_args()
 
     if args.command == 'add':
         add_expense(args.description, args.amount)
+    elif args.command == 'list':
+        list_expenses()
 
 
 if __name__ == "__main__":
