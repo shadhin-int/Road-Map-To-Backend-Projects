@@ -52,9 +52,15 @@ def update_expense(id, description, amount):
             save_expenses(expense)
             print(f"Expense {id} updated successfully")
             return
-            
+
     print(f"Expense with ID {id} not found")
 
+
+def delete_expense(id):
+    expenses = load_expenses()
+    expenses = [expense for expense in expenses if expense['id'] != id]
+    save_expenses(expenses)
+    print(f'Expense {id} deleted successfully')
 
 
 def main():
@@ -74,9 +80,14 @@ def main():
 
     # Update Expense
     parser_update = subparsers.add_parser('update', help='Update an expense')
-    parser_update.add_argument('--id', type=int, required=True, help='Expense ID')
+    parser_update.add_argument('--id', type=int, required=True, help='Expense Id')
     parser_update.add_argument('--description', type=str, required=True, help='New expense description')
     parser_update.add_argument('--amount', type=float, required=True, help='New expense amount')
+
+
+    # Delete Expense
+    parser_delete = subparsers.add_parser('delete', help="Delete Expense")
+    parser_delete.add_argument('--id', type=int, required=True, help='Expense Id')
 
 
     args = parser.parse_args()
@@ -86,7 +97,9 @@ def main():
     elif args.command == 'list':
         list_expenses()
     elif args.command == 'update':
-        update_expense()
+        update_expense(args.id, args.description, args.amount)
+    elif args.command == 'delete':
+        delete_expense(args.id)
 
 
 if __name__ == "__main__":
