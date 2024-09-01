@@ -42,6 +42,21 @@ def list_expenses():
         print(f"{expense['id']}   {expense['date']} {expense['description']}        ${expense['amount']:.2f}")
 
 
+def update_expense(id, description, amount):
+    expenses = load_expenses()
+
+    for expense in expenses:
+        if expenses['id'] == id:
+            expense['description'] = description
+            expense['amount'] = float(amount)
+            save_expenses(expense)
+            print(f"Expense {id} updated successfully")
+            return
+            
+    print(f"Expense with ID {id} not found")
+
+
+
 def main():
     parser = argparse.ArgumentParser(description="Expense Tracker")
     subparsers = parser.add_subparsers(dest='command')
@@ -57,12 +72,21 @@ def main():
     parser_list = subparsers.add_parser('list', help='List all expenses')
 
 
+    # Update Expense
+    parser_update = subparsers.add_parser('update', help='Update an expense')
+    parser_update.add_argument('--id', type=int, required=True, help='Expense ID')
+    parser_update.add_argument('--description', type=str, required=True, help='New expense description')
+    parser_update.add_argument('--amount', type=float, required=True, help='New expense amount')
+
+
     args = parser.parse_args()
 
     if args.command == 'add':
         add_expense(args.description, args.amount)
     elif args.command == 'list':
         list_expenses()
+    elif args.command == 'update':
+        update_expense()
 
 
 if __name__ == "__main__":
